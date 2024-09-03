@@ -41,8 +41,10 @@ void	ray_trace(t_minirt *data)
 	pixel.y = 0;
 	while (i < data->nbr_object)
 	{
+		pixel.y = 0;
 		while(pixel.y < WIN_HEIGHT)
 		{
+			pixel.x = 0;
 			while(pixel.x < WIN_WIDTH)
 			{
 				ray = get_ray(pixel.x, pixel.y, data->camera);
