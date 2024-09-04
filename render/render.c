@@ -64,6 +64,8 @@ void	ray_trace(t_minirt *data, t_wdata *win_data)
 			}
 			pixel.y++;
 		}
+		mlx_put_image_to_window(win_data->mlx,
+		win_data->win, win_data->img, 0, 0);
 		i++;
 	}
 	render_light(ray, data->alight, data->light);
@@ -72,6 +74,4 @@ void	ray_trace(t_minirt *data, t_wdata *win_data)
 void	render(t_minirt *data, t_wdata *win_data)
 {
 	ray_trace(data, win_data);
-	mlx_put_image_to_window(win_data->mlx,
-		win_data->win, win_data->img, 0, 0);
 }
