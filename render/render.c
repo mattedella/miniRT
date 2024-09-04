@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 15:13:30 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:44:14 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ray_trace(t_minirt *data, t_wdata *win_data)
 				if (i < data->nbr_sphere && data->sphere[i].flag != 0)
 					render_sphere(ray, data->sphere[i], win_data, pixel);
 				if (i < data->nbr_cylinder && data->cylinder[i].flag != 0)
-					render_cylinder(ray, data->cylinder[i]);
+					render_cylinder(ray, data->cylinder[i], win_data, pixel);
 				if (i < data->nbr_plane && data->plane[i].flag != 0)
 					render_plane(ray, data->plane[i], win_data, pixel);
 				pixel.x++;
