@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:26:24 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 17:29:15 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:50:19 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_sphere(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	printf("sfera: %d\n", n_cmd);
 	if (n_cmd == 0)
 		data->sphere = malloc(sizeof(t_sphere));
 	else
@@ -45,7 +44,6 @@ void	init_cylinder(t_minirt *data, int n_cmd)
 		data->cylinder = my_calloc(sizeof(t_cylinder));
 	else	
 		data->cylinder = my_calloc(sizeof(t_cylinder) * n_cmd);
-	printf("cilindro: %d\n", n_cmd);
 	while (i < n_cmd && n_cmd != 0)
 	{
 		data->cylinder[i].position.x = 0;
@@ -69,7 +67,6 @@ void	init_plane(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	printf("piano: %d\n", n_cmd);
 	if (n_cmd == 0)
 		data->plane = my_calloc(sizeof(t_plane));
 	else	

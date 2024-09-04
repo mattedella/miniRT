@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:31:55 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 17:07:17 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:25:19 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_camera(char **mat, t_minirt *data)
 	data->camera->vector_norm.z = ft_atod(tmp[2]);
 	free_mat(tmp);
 	check_vector_range(data->camera->vector_norm);
-	data->camera->fov = (atoi(mat [3]) * PI) / 180;
+	data->camera->fov = (ft_atoi(mat [3]) * 0.5 * PI) / 180;
 	check_fov(data->camera->fov);
 }
 

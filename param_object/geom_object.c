@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:29:05 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 17:30:30 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:25:48 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	get_sphere(char **mat, t_minirt *data, int i)
 {
 	char	**tmp;
 
-	printf("%d\n", i);
 	tmp = ft_split(mat[1], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		(void)(printf("Error: insert more data") + ft_exit(3));

@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 17:22:15 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:20:01 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # endif
 
 # define PI 3.141592653
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1000
+# define WIN_WIDTH 900
+# define WIN_HEIGHT 900
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
@@ -94,7 +94,7 @@ typedef struct	s_camera
 {
 	t_coord		position;
 	t_coord		vector_norm;
-	int			fov;
+	double		fov;
 }				t_camera;
 
 typedef struct	s_sphere
@@ -115,19 +115,19 @@ typedef struct	s_plane
 
 typedef struct	s_cylinder
 {
+	int			flag;
 	t_coord		position;
 	t_coord		vector_norm;
 	double		diameter;
 	double		height;
 	t_rgb		color;
-	int			flag;
 }				t_cylinder;
 
 typedef struct	s_window_data
 {
+	void		*mlx;
 	void		*win;
 	void		*img;
-	void		*mlx;
 	int			endian;
 	int			bits_per_pixel;
 	int			line_length;
@@ -144,6 +144,9 @@ typedef struct	s_minirt
 	t_cylinder	*cylinder;
 	t_wdata		*win_data;
 	int			nbr_object;
+	int			nbr_plane;
+	int			nbr_sphere;
+	int			nbr_cylinder;
 }				t_minirt;
 
 //get_next_line
@@ -189,17 +192,20 @@ void	init_window(t_wdata *win_data);
 void	init_data(t_minirt *data, t_wdata *win_data);
 
 // rendering
-void	render(t_minirt *data);
-void	ray_trace(t_minirt *data);
-void	render_plane(t_ray ray, t_plane plane);
-void	render_sphere(t_ray ray, t_sphere sphere, t_wdata *win_data);
-void	render_cylinder(t_ray ray, t_cylinder cylinder);
+void	render(t_minirt *data, t_wdata *win_data);
+void	ray_trace(t_minirt *data, t_wdata *win_data);
+void	render_plane(t_ray ray, t_plane plane,
+		t_wdata *win_data, t_coord pixel);
+void	render_sphere(t_ray ray, t_sphere sphere,
+		t_wdata *win_data, t_coord pixel);
+void	render_cylinder(t_ray ray, t_cylinder cylinder,
+		t_wdata *win_data, t_coord pixel);
 void	render_light(t_ray ray, t_alight *alight, t_light *light);
 void	put_pixel(t_wdata *data, int x, int y, t_rgb color);
 
 // vector
 unsigned int	create_rgb(int r, int g, int b);
-t_coord			vector_normalize(t_coord v);
+t_coord			vector_norm(t_coord v);
 t_coord			vector_scale(t_coord v, double t);
 t_coord			vector_add(t_coord v1, t_coord v2);
 t_coord 		vector_cross(t_coord v1, t_coord v2);

@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:47:27 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 14:47:58 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:01:21 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double	vector_dot(t_coord v1, t_coord v2)
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_coord	vector_normalize(t_coord v)
+t_coord	vector_norm(t_coord v)
 {
 	double length;
 

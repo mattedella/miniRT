@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:08:22 by mdella-r          #+#    #+#             */
-/*   Updated: 2023/10/17 12:42:01 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:39:55 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(const char *nptr)
 			s++;
 		i++;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	while (nptr[i] >= '0' && nptr[i] <= '9' && nptr[i] != '\n')
 	{
 		n = (n * 10 + nptr[i] - 48);
 		i++;

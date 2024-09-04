@@ -6,22 +6,19 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:32 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 17:46:44 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:42:04 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"miniRT.h"
 
-static t_minirt	*set_malloc(void)
-{
-	t_minirt	*data;
-	t_wdata		win_data;
+// static void	set_malloc(t_wdata *w_data)
+// {
+// 	// t_minirt	*data;
 	
-	data = my_calloc(sizeof(t_minirt));
-	init_window(&win_data);
-	init_data(data, &win_data);
-	return (data);
-}
+// 	// data = my_calloc(sizeof(t_minirt));
+// 	init_data(data, w_data);
+// }
 
 void	check_object(t_minirt *data, char **file)
 {
@@ -33,12 +30,11 @@ void	check_object(t_minirt *data, char **file)
 	id.t = 0;
 	while (file[id.i])
 	{
-		printf("%c\n", file[id.i][0]);
 		if (ft_strncmp(file[id.i], "sp ", 3) == 0)
 			id.j++;
-		else if (ft_strncmp(file[id.i], "pl", 3) == 0)
+		else if (ft_strncmp(file[id.i], "pl ", 3) == 0)
 			id.k++;
-		else if (ft_strncmp(file[id.i], "cy", 3) == 0)
+		else if (ft_strncmp(file[id.i], "cy ", 3) == 0)
 			id.t++;
 		id.i++;
 	}
@@ -95,6 +91,9 @@ static void	get_param(char **file, t_minirt *data)
 		id.i++;
 	}
 	data->nbr_object = id.j + id.k + id.t;
+	data->nbr_plane = id.k;
+	data->nbr_sphere = id.j;
+	data->nbr_cylinder = id.t;
 }
 
 static int	get_file(t_minirt *data, int len, char *arg)
@@ -142,21 +141,23 @@ int main(int argc, char **argv)
 {
 	int			fd;
 	int			len;
-	t_minirt	*data;
+	t_minirt	data;
+	t_wdata		win_data;
 
 	if (argc != 2)
 		return (printf("Error: number of argument is not correct\n"), 1);
 	if (check_filename(argv[1]) == 0)
 	{
-		data = set_malloc();
+		init_window(&win_data);
+		init_data(&data, &win_data);
 		len = mat_get_len(argv[1]);
-		fd = get_file(data, len, argv[1]);
+		fd = get_file(&data, len, argv[1]);
 		if (fd == 1)
 			return (1);
-		render(data);
-		mlx_hook(data->win_data->win, 2, 1, &key_hook, data->win_data);
-		mlx_hook(data->win_data->win, 17, 1L << 17, &press_x, data->win_data);
-		mlx_loop(data->win_data->mlx);
+		render(&data, &win_data);
+		mlx_hook(win_data.win, 2, 1, &key_hook, &win_data);
+		mlx_hook(win_data.win, 17, 1L << 17, &press_x, &win_data);
+		mlx_loop(win_data.mlx);
 	}
 	else
 		return (printf("Error: file is not correct\n"), 1);

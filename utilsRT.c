@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:55:56 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/02 16:56:04 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:32:46 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ double	ft_atod(char *argv)
 	i = 0;
 	if (argv[i] == '-')
 		i++;
-	while (argv[i] && argv[i] != '.')
+	while (argv[i] && argv[i] != '.' && argv[i] != '\n')
 		r = r * 10 + (argv[i++] - 48);
 	j = i + 1;
 	if (argv[i] == '.')
-		while (argv[++i])
+		while (argv[++i] && argv[i] != '\n')
 			n = n * 10 + (argv[i] - 48);
 	if (n != 0)
 		r += n / pow(10, ft_strlen(argv + j));
