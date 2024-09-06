@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 15:44:14 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:11:16 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static t_ray	get_ray(double x, double y, t_camera *camera)
 
 void	ray_trace(t_minirt *data, t_wdata *win_data)
 {
-	t_ray	ray;
 	int		i;
 	t_coord	pixel;
 
@@ -53,25 +52,27 @@ void	ray_trace(t_minirt *data, t_wdata *win_data)
 			pixel.x = 0;
 			while(pixel.x < WIN_WIDTH)
 			{
-				ray = get_ray(pixel.x, pixel.y, data->camera);
-				if (i < data->nbr_sphere && data->sphere[i].flag != 0)
-					render_sphere(ray, data->sphere[i], win_data, pixel);
-				if (i < data->nbr_cylinder && data->cylinder[i].flag != 0)
-					render_cylinder(ray, data->cylinder[i], win_data, pixel);
-				if (i < data->nbr_plane && data->plane[i].flag != 0)
-					render_plane(ray, data->plane[i], win_data, pixel);
+				render(data, win_data, pixel, i);
 				pixel.x++;
 			}
 			pixel.y++;
 		}
 		i++;
+		mlx_put_image_to_window(win_data->mlx,
+		win_data->win, win_data->img, 0, 0);
 	}
-	render_light(ray, data->alight, data->light);
+	// render_light(ray, data->alight, data->light);
 }
 
-void	render(t_minirt *data, t_wdata *win_data)
+void	render(t_minirt *data, t_wdata *win_data, t_coord pixel, int i)
 {
-	ray_trace(data, win_data);
-	mlx_put_image_to_window(win_data->mlx,
-		win_data->win, win_data->img, 0, 0);
+	t_ray	ray;
+
+	ray = get_ray(pixel.x, pixel.y, data->camera);
+	if (i < data->nbr_plane && data->plane[i].flag != 0)
+		render_plane(ray, data->plane[i], win_data, pixel);
+	if (i < data->nbr_sphere && data->sphere[i].flag != 0)
+		render_sphere(ray, data->sphere[i], win_data, pixel);
+	if (i < data->nbr_cylinder && data->cylinder[i].flag != 0)
+		render_cylinder(ray, data->cylinder[i], win_data, pixel);
 }

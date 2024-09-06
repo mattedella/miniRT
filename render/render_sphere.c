@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:53:26 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 14:59:36 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:12:32 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ static int	 intersect_ray_sphere(t_ray ray, t_sphere sphere, double *t)
 void	render_sphere(t_ray ray, t_sphere sphere, t_wdata *win_data, t_coord pixel)
 {
 	double	t;
-	t_rgb	color;
+	// t_rgb	color;
 
-	color = (t_rgb){0, 0, 0};
+	// color = (t_rgb){0, 0, 0};
 	if (intersect_ray_sphere(ray, sphere, &t))
 		put_pixel(win_data, pixel.x, pixel.y, sphere.color);
-	else
-	{
-		if (pixel.y < WIN_HEIGHT / 2)
-			put_pixel(win_data, pixel.x, pixel.y, color);
-		else
-		{
-			color = (t_rgb){10, 10, 10};
-			put_pixel(win_data, pixel.x, pixel.y, color);
-		}
-	}
+	// else
+	// {
+	// 	if (pixel.y < WIN_HEIGHT / 2)
+	// 		put_pixel(win_data, pixel.x, pixel.y, color);
+	// 	else
+	// 	{
+	// 		color = (t_rgb){10, 10, 10};
+	// 		put_pixel(win_data, pixel.x, pixel.y, color);
+	// 	}
+	// }
 	
 }

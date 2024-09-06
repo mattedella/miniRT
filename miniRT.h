@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 15:20:01 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:19:36 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # endif
 
 # define PI 3.141592653
-# define WIN_WIDTH 900
-# define WIN_HEIGHT 900
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 1000
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
@@ -192,7 +192,7 @@ void	init_window(t_wdata *win_data);
 void	init_data(t_minirt *data, t_wdata *win_data);
 
 // rendering
-void	render(t_minirt *data, t_wdata *win_data);
+void	render(t_minirt *data, t_wdata *win_data, t_coord pixel, int i);
 void	ray_trace(t_minirt *data, t_wdata *win_data);
 void	render_plane(t_ray ray, t_plane plane,
 		t_wdata *win_data, t_coord pixel);

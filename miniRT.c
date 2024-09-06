@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:32 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 14:42:04 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:50:40 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 		fd = get_file(&data, len, argv[1]);
 		if (fd == 1)
 			return (1);
-		render(&data, &win_data);
+		ray_trace(&data, &win_data);
 		mlx_hook(win_data.win, 2, 1, &key_hook, &win_data);
 		mlx_hook(win_data.win, 17, 1L << 17, &press_x, &win_data);
 		mlx_loop(win_data.mlx);
