@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/06 10:11:16 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:27:26 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ray_trace(t_minirt *data, t_wdata *win_data)
 			}
 			pixel.y++;
 		}
+		mlx_put_image_to_window(win_data->mlx,
+		win_data->win, win_data->img, 0, 0);
 		i++;
 		mlx_put_image_to_window(win_data->mlx,
 		win_data->win, win_data->img, 0, 0);
