@@ -6,7 +6,7 @@
 #    By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/16 22:16:14 by mdella-r          #+#    #+#              #
-#    Updated: 2024/09/02 17:06:07 by mdella-r         ###   ########.fr        #
+#    Updated: 2024/09/25 14:55:56 by mdella-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,17 +20,17 @@ HEADER = libft.h
 all: ${NAME}
 
 ${NAME}: ${MANDATORY_OBJS}
-	ar rc ${NAME} ${MANDATORY_OBJS}
-	ranlib ${NAME}
+	@ar rc ${NAME} ${MANDATORY_OBJS}
+	@ranlib ${NAME}
 
 %.o: %.c ${HEADER}
-	gcc -g -Wall -Wextra -Werror -c $< -o $@
+	@gcc -g -Wall -Wextra -Werror -c $< -o $@
 
 clean:
-	rm -f ${MANDATORY_OBJS} ${BONUS_OBJS}
+	@rm -f ${MANDATORY_OBJS} ${BONUS_OBJS}
 
 fclean: clean
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
 re: fclean all
 

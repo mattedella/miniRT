@@ -6,51 +6,33 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:53:26 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/06 10:12:32 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:02:43 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
-static int	 intersect_ray_sphere(t_ray ray, t_sphere sphere, double *t)
+void	render_sphere(t_ray ray, t_sphere sphere,
+					t_wdata *win_data, t_coord pixel)
 {
-	t_coord	center_adjust;
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
+	double			t;
+	t_coord			center_adjust;
+	t_double		id;	
 
-	center_adjust = vector_subtract(ray.origin, sphere.position);
-	a = vector_dot(ray.direction, ray.direction);
-	b = 2.0 * vector_dot(center_adjust, ray.direction);
-	c =  vector_dot(center_adjust, center_adjust) - pow(sphere.diameter /2, 2);
-	discriminant = pow(b, 2) - 4 * a * c;
-	if (discriminant < 0)
-		return 0;
-	else
+	center_adjust = subtract(ray.origin, sphere.position);
+	id.a = dot(ray.direction, ray.direction);
+	id.b = 2.0 * dot(center_adjust, ray.direction);
+	id.c = dot(center_adjust, center_adjust) - pow(sphere.diameter / 2, 2);
+	id.disc = pow(id.b, 2) - 4 * id.a * id.c;
+	if (id.disc >= 0)
 	{
-		*t = (-b - sqrt(discriminant)) / (2.0 * a);
-		return 1;
+		t = (-id.b - sqrt(id.disc)) / (2.0 * id.a);
+		if (t > 0 && t < *closest_dist())
+		{
+			*closest_dist() = t;
+			if (t < *sphere_dist())
+				*sphere_dist() = t;
+			put_pixel(win_data, pixel.x, pixel.y, sphere.color);
+		}
 	}
-}
-
-void	render_sphere(t_ray ray, t_sphere sphere, t_wdata *win_data, t_coord pixel)
-{
-	double	t;
-	// t_rgb	color;
-
-	// color = (t_rgb){0, 0, 0};
-	if (intersect_ray_sphere(ray, sphere, &t))
-		put_pixel(win_data, pixel.x, pixel.y, sphere.color);
-	// else
-	// {
-	// 	if (pixel.y < WIN_HEIGHT / 2)
-	// 		put_pixel(win_data, pixel.x, pixel.y, color);
-	// 	else
-	// 	{
-	// 		color = (t_rgb){10, 10, 10};
-	// 		put_pixel(win_data, pixel.x, pixel.y, color);
-	// 	}
-	// }
-	
 }

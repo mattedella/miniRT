@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_coord	vector_add(t_coord v1, t_coord v2)
+t_coord	add(t_coord v1, t_coord v2)
 {
 	t_coord result;
 
@@ -10,7 +10,7 @@ t_coord	vector_add(t_coord v1, t_coord v2)
 	return (result);
 }
 
-t_coord	vector_subtract(t_coord v1, t_coord v2)
+t_coord	subtract(t_coord v1, t_coord v2)
 {
 	t_coord result;
 
@@ -20,7 +20,7 @@ t_coord	vector_subtract(t_coord v1, t_coord v2)
 	return (result);
 }
 
-t_coord	vector_scale(t_coord v, double t)
+t_coord	scale(t_coord v, double t)
 {
 	t_coord result;
 

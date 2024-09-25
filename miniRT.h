@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/06 11:19:36 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:24:03 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <string.h>
 # include <limits.h>
 # include <math.h>
+# include <float.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
@@ -52,6 +53,13 @@ typedef struct	s_index
 	int			t;
 }				t_index;
 
+typedef struct	s_double
+{
+	double		a;
+	double		b;
+	double		c;
+	double		disc;
+}				t_double;
 
 typedef struct	s_coord
 {
@@ -155,7 +163,7 @@ char	*get_next_line(int fd);
 
 // window utils
 int		press_x(t_wdata *data);
-int	key_hook(int keycode, t_wdata *data);
+int		key_hook(int keycode, t_wdata *data);
 
 // init param object
 void	get_light(char **mat, t_minirt *data);
@@ -186,6 +194,10 @@ size_t	mat_get_len(char *argv);
 
 // init data
 t_list	**garbage_collector(void);
+double	*closest_dist(void);
+double	*sphere_dist(void);
+double	*plane_dist(void);
+double	*cylinder_dist(void);
 void	*my_calloc(size_t size);
 void	garbage_collector_free();
 void	init_window(t_wdata *win_data);
@@ -205,12 +217,11 @@ void	put_pixel(t_wdata *data, int x, int y, t_rgb color);
 
 // vector
 unsigned int	create_rgb(int r, int g, int b);
-t_coord			vector_norm(t_coord v);
-t_coord			vector_scale(t_coord v, double t);
-t_coord			vector_add(t_coord v1, t_coord v2);
-t_coord 		vector_cross(t_coord v1, t_coord v2);
-t_coord			vector_subtract(t_coord v1, t_coord v2);
-double			vector_dot(t_coord v1, t_coord v2);
-double			vector_dot(t_coord v1, t_coord v2);
+t_coord			norm(t_coord v);
+t_coord			scale(t_coord v, double t);
+t_coord			add(t_coord v1, t_coord v2);
+t_coord 		cross(t_coord v1, t_coord v2);
+t_coord			subtract(t_coord v1, t_coord v2);
+double			dot(t_coord v1, t_coord v2);
 
 #endif
