@@ -6,65 +6,61 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 15:03:43 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 15:02:46 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:03:44 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	intersect_cylinder(t_coord pixel, t_cylinder cylinder,
-							t_coord hit_point, t_wdata *win_data)
+static t_double	get_vars(t_ray ray, t_cylinder cylinder)
 {
-	t_coord	base_to_point;
-	double	height_proj;
+	t_coord		oc;
+	t_double	vars;
+	t_coord		dir_perp;
+	t_coord		oc_perp;
 
-	base_to_point = subtract(hit_point, cylinder.position);
-	height_proj = dot(base_to_point, cylinder.vector_norm);
-	if (height_proj >= 0 && height_proj <= cylinder.height)
-		put_pixel(win_data, pixel.x, pixel.y, cylinder.color);
+	oc = subtract(ray.origin, cylinder.position);
+	dir_perp = subtract(ray.direction, scale(cylinder.vector_norm,
+			dot(ray.direction, cylinder.vector_norm)));
+	oc_perp = subtract(oc, scale(cylinder.vector_norm,
+			dot(oc, cylinder.vector_norm)));
+	vars.a = dot(dir_perp, dir_perp);
+	vars.b = 2.0 * dot(oc_perp, dir_perp);
+	vars.c = dot(oc_perp, oc_perp) - pow(cylinder.diameter / 2, 2);
+	vars.disc = pow(vars.b, 2) - (4 * vars.a * vars.c);
+	return (vars);
 }
 
-static t_double	get_discriminant(t_ray ray, t_cylinder cylinder, t_coord c_adj)
+static int within_cylinder_height(t_cylinder cylinder, t_coord point)
 {
-	t_double	ret;
+	double hit_height;
+	double half_height;
 
-	ret.a = dot(ray.direction, ray.direction)
-		- pow(dot(ray.direction, cylinder.vector_norm), 2);
-	ret.b = 2.0 * (dot(c_adj, ray.direction)
-			- (dot(c_adj, cylinder.vector_norm)
-				* dot(ray.direction, cylinder.vector_norm)));
-	ret.c = dot(c_adj, c_adj)
-		- pow(dot(c_adj, cylinder.vector_norm), 2)
-		- pow(cylinder.diameter / 2, 2);
-	ret.disc = ret.b * ret.b - 4 * ret.a * ret.c;
-	return (ret);
+	hit_height = dot(subtract(point, cylinder.position), cylinder.vector_norm);
+	half_height = cylinder.height / 2;
+	if (hit_height < -half_height || hit_height > half_height)
+		return (0);
+	else
+		return (1);
 }
 
 void	render_cylinder(t_ray ray, t_cylinder cylinder,
 						t_wdata *win_data, t_coord pixel)
 {
-	t_coord		center_adjust;
-	t_double	id;
-	t_double	t;
-	t_coord		hit_point;
+	t_coord		point;
+    t_double	vars;
+	t_double	dist;
 
-	center_adjust = subtract(ray.origin, cylinder.position);
-	id = get_discriminant(ray, cylinder, center_adjust);
-	if (id.disc >= 0)
+	vars = get_vars(ray, cylinder);
+	if (vars.disc < 0)
+		return ;
+	dist.a = (-vars.b - sqrt(vars.disc)) / (2 * vars.a);
+	dist.b = (-vars.b + sqrt(vars.disc)) / (2 * vars.a);
+	dist.c = fmin(dist.a, dist.b);
+	point = add(ray.origin, scale(ray.direction, dist.c));
+	if (dist.c > 0 && dist.c < *closest_dist() && within_cylinder_height(cylinder, point))
 	{
-		t.a = (-id.b - sqrt(id.disc)) / (2 * id.a);
-		t.b = (-id.b + sqrt(id.disc)) / (2 * id.a);
-		if (t.a < t.b)
-			t.disc = t.a;
-		else
-			t.disc = t.b;
-		if (t.disc > 0 && t.disc < *closest_dist())
-		{
-			*closest_dist() = t.disc;
-			if (t.disc < *cylinder_dist())
-				*cylinder_dist() = t.disc;
-			hit_point = add(ray.origin, scale(ray.direction, t.disc));
-			intersect_cylinder(pixel, cylinder, hit_point, win_data);
-		}
+		*closest_dist() = dist.c;
+		put_pixel(win_data, (int)pixel.x, (int)pixel.y, cylinder.color);
 	}
 }

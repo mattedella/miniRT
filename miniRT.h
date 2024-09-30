@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 15:24:03 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:49:34 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,6 @@ typedef struct s_ray
 	t_coord		direction;
 	double		half_fov;
 }				t_ray;
-
-typedef struct s_hit_record
-{
-	t_coord		p;
-	t_coord		normal;
-	double		t;
-	int			front_face;
-}				t_hit_record;
 
 typedef struct	s_alight
 {
@@ -223,5 +215,6 @@ t_coord			add(t_coord v1, t_coord v2);
 t_coord 		cross(t_coord v1, t_coord v2);
 t_coord			subtract(t_coord v1, t_coord v2);
 double			dot(t_coord v1, t_coord v2);
+double			length(t_coord v);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 14:10:57 by mdella-r          #+#    #+#              #
-#    Updated: 2024/09/25 14:55:27 by mdella-r         ###   ########.fr        #
+#    Updated: 2024/09/30 16:00:29 by mdella-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,5 +50,6 @@ clean:
 fclean: clean
 		@make fclean -C $(LIBFT_DIR)
 		rm -f $(NAME)
+		rm -rf $(MLX_DIR)
 
 re: fclean all

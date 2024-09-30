@@ -30,6 +30,11 @@ t_coord	scale(t_coord v, double t)
 	return (result);
 }
 
+double	length(t_coord v)
+{
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
 unsigned int	create_rgb(int r, int g, int b)
 {
 	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
