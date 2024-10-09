@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:26:24 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 15:01:11 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:30:24 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ void	init_sphere(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	if (n_cmd == 0)
-		data->sphere = malloc(sizeof(t_sphere));
-	else
-		data->sphere = my_calloc(sizeof(t_sphere) * n_cmd);
+	if (n_cmd > 0)
+		data->sphere = my_calloc(sizeof(t_sphere), n_cmd);
 	while (i < n_cmd && n_cmd != 0)
 	{
 		data->sphere[i].position.x = 0;
@@ -40,10 +38,8 @@ void	init_cylinder(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	if (n_cmd == 0)
-		data->cylinder = my_calloc(sizeof(t_cylinder));
-	else	
-		data->cylinder = my_calloc(sizeof(t_cylinder) * n_cmd);
+	if (n_cmd > 0)	
+		data->cylinder = my_calloc(sizeof(t_cylinder),n_cmd);
 	while (i < n_cmd && n_cmd != 0)
 	{
 		data->cylinder[i].position.x = 0;
@@ -67,10 +63,8 @@ void	init_plane(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	if (n_cmd == 0)
-		data->plane = my_calloc(sizeof(t_plane));
-	else	
-		data->plane = my_calloc(sizeof(t_plane) * n_cmd);
+	if (n_cmd > 0)
+		data->plane = my_calloc(sizeof(t_plane), n_cmd);
 	while (i < n_cmd && n_cmd != 0)
 	{
 		data->plane[i].position.x = 0;
@@ -89,9 +83,9 @@ void	init_plane(t_minirt *data, int n_cmd)
 
 void	init_data(t_minirt *data, t_wdata *win_data)
 {
-	data->alight = my_calloc(sizeof(t_alight));
-	data->camera = my_calloc(sizeof(t_camera));
-	data->light = my_calloc(sizeof(t_light));
+	data->alight = my_calloc(sizeof(t_alight), 1);
+	data->camera = my_calloc(sizeof(t_camera), 1);
+	data->light = my_calloc(sizeof(t_light), 1);
 	data->win_data = win_data;
 }
 

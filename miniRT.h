@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/30 15:49:34 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:00:22 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,27 +155,30 @@ char	*get_next_line(int fd);
 
 // window utils
 int		press_x(t_wdata *data);
-int		key_hook(int keycode, t_wdata *data);
+int		key_hook(int keycode, t_wdata *w_data, t_minirt *data);
+int		quit(char id, t_wdata *data, char **mat, char **file);
 
 // init param object
-void	get_light(char **mat, t_minirt *data);
-void	get_camera(char **mat, t_minirt *data);
-void	get_ambient_light(char **mat, t_minirt *data);
+void	get_light(char **mat, char **file, t_minirt *data);
+void	get_camera(char **mat, char **file, t_minirt *data);
+void	get_ambient_light(char **mat, char **file, t_minirt *data);
 
 // init object
-void	get_plane(char **mat, t_minirt *data, int i);
-void	get_sphere(char **mat, t_minirt *data, int i);
-void	get_cylinder(char **mat, t_minirt *data, int i);
+void	check_object(t_minirt *data, char **file);
+void	check_option(t_minirt *data, char **file);
+void	get_plane(char **mat, char **file, t_minirt *data, int i);
+void	get_sphere(char **mat, char **file, t_minirt *data, int i);
+void	get_cylinder(char **mat, char **file, t_minirt *data, int i);
 void	init_plane(t_minirt *data, int n_cmd);
 void	init_sphere(t_minirt *data, int n_cmd);
 void	init_cylinder(t_minirt *data, int n_cmd);
 void	check_object(t_minirt *data, char **file);
 
 // check_param
-void	check_fov(int fov);
-void	check_color_range(t_rgb color);
-void	check_ratio_light(double light);
-void	check_vector_range(t_coord pos);
+void	check_fov(int fov, t_wdata *data, char **mat, char **file);
+void	check_color_range(t_rgb color, t_wdata *data, char **mat, char **file);
+void	check_ratio_light(double light, t_wdata *data, char **mat, char **file);
+void	check_vector_range(t_coord pos, t_wdata *data, char **mat, char **file);
 
 // utils
 int		ft_exit(int id);
@@ -184,19 +187,20 @@ int		mat_len(char **mat);
 void	free_mat(char **mat);
 size_t	mat_get_len(char *argv);
 
-// init data
-t_list	**garbage_collector(void);
+// render order
 double	*closest_dist(void);
-double	*sphere_dist(void);
 double	*plane_dist(void);
+double	*sphere_dist(void);
 double	*cylinder_dist(void);
-void	*my_calloc(size_t size);
+
+// init data
+void	*my_calloc(size_t size, int n_cmd);
 void	garbage_collector_free();
 void	init_window(t_wdata *win_data);
 void	init_data(t_minirt *data, t_wdata *win_data);
 
 // rendering
-void	render(t_minirt *data, t_wdata *win_data, t_coord pixel, int i);
+void	render(t_minirt *data, t_wdata *win_data, t_coord pixel);
 void	ray_trace(t_minirt *data, t_wdata *win_data);
 void	render_plane(t_ray ray, t_plane plane,
 		t_wdata *win_data, t_coord pixel);

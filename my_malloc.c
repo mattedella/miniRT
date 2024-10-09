@@ -6,30 +6,30 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:30:50 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 12:29:51 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:31:40 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"miniRT.h"
 
-void	*my_calloc(size_t size)
+static t_list	**garbage_collector(void)
+{
+	static t_list	*gc = NULL;
+
+	return (&gc);
+}
+
+void	*my_calloc(size_t size, int n_cmd)
 {
 	t_list	*node;
 	void	*ptr;
 
-	ptr = malloc(size);
+	ptr = malloc(n_cmd * size);
 	if (!ptr)
 		return (NULL);
 	node = ft_lstnew(ptr);
 	ft_lstadd_front(garbage_collector(), node);
 	return (ptr);
-}
-
-t_list	**garbage_collector(void)
-{
-	static t_list	*gc = NULL;
-
-	return (&gc);
 }
 
 void	garbage_collector_free(void)

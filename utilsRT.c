@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:55:56 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/04 11:32:46 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:53:58 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ size_t	mat_get_len(char *argv)
 		tmp = get_next_line(fd);
 		i++;
 	}
+	free(tmp);
 	close(fd);
 	return(i);
 }
@@ -80,5 +81,6 @@ int	mat_len(char **mat)
 
 int	ft_exit(int id)
 {
+	garbage_collector_free();
 	exit(id);
 }

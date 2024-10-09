@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 10:12:29 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/08/29 16:50:28 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:39:04 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	**ft_split(char const *s, char c)
 		st[i] = alloc_str((char *) s, c, &j);
 		if (!st[i])
 		{
-			free_mem (st, i);
+			free_mem(st, i);
 			return (NULL);
 		}
 		i++;
