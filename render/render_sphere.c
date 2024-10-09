@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:53:26 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 15:02:43 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:58:58 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ void	render_sphere(t_ray ray, t_sphere sphere,
 	if (id.disc >= 0)
 	{
 		t = (-id.b - sqrt(id.disc)) / (2.0 * id.a);
-		if (t > 0 && t < *closest_dist())
+		if (t > 0 && t < *closest_dist() && t < *sphere_dist())
 		{
+			*sphere_dist() = t;
 			*closest_dist() = t;
-			if (t < *sphere_dist())
-				*sphere_dist() = t;
 			put_pixel(win_data, pixel.x, pixel.y, sphere.color);
 		}
 	}

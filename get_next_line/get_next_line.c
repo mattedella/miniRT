@@ -6,13 +6,13 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 11:19:35 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/08/28 16:29:59 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:47:13 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include"miniRT.h"
 
-static char	*ft_join(char *buff_stat, char *buff)
+char	*ft_join(char *buff_stat, char *buff)
 {
 	char	*tmp;
 	int		i;
@@ -39,7 +39,7 @@ static char	*ft_join(char *buff_stat, char *buff)
 	return (tmp);
 }
 
-static char	*ft_fill(char *buff, char *buff_stat, int fd)
+char	*ft_fill(char *buff, char *buff_stat, int fd)
 {
 	int		f;
 
@@ -59,7 +59,7 @@ static char	*ft_fill(char *buff, char *buff_stat, int fd)
 	return (buff_stat);
 }
 
-static char	*ft_copy(char *buff_stat)
+char	*ft_copy(char *buff_stat)
 {
 	int		i;
 	int		j;
@@ -78,7 +78,7 @@ static char	*ft_copy(char *buff_stat)
 	return (str);
 }
 
-static char	*ft_cut(char *buff_stat)
+char	*ft_cut(char *buff_stat)
 {
 	char	*tmp;
 	int		c;

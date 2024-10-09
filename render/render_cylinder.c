@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 15:03:43 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/30 16:03:44 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:59:40 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static t_double	get_vars(t_ray ray, t_cylinder cylinder)
 {
-	t_coord		oc;
-	t_double	vars;
 	t_coord		dir_perp;
 	t_coord		oc_perp;
+	t_coord		oc;
+	t_double	vars;
 
 	oc = subtract(ray.origin, cylinder.position);
 	dir_perp = subtract(ray.direction, scale(cylinder.vector_norm,
@@ -58,9 +58,11 @@ void	render_cylinder(t_ray ray, t_cylinder cylinder,
 	dist.b = (-vars.b + sqrt(vars.disc)) / (2 * vars.a);
 	dist.c = fmin(dist.a, dist.b);
 	point = add(ray.origin, scale(ray.direction, dist.c));
-	if (dist.c > 0 && dist.c < *closest_dist() && within_cylinder_height(cylinder, point))
+	if (dist.c > 0 && dist.c < *closest_dist()  && dist.c < *cylinder_dist()
+		&& within_cylinder_height(cylinder, point))
 	{
 		*closest_dist() = dist.c;
+		*cylinder_dist() = dist.c;
 		put_pixel(win_data, (int)pixel.x, (int)pixel.y, cylinder.color);
 	}
 }

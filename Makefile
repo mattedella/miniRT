@@ -6,11 +6,11 @@
 #    By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 14:10:57 by mdella-r          #+#    #+#              #
-#    Updated: 2024/09/30 16:00:29 by mdella-r         ###   ########.fr        #
+#    Updated: 2024/10/09 12:30:28 by mdella-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	miniRT.c utilsRT.c initMiniRT.c my_malloc.c closest_distance.c\
+SRCS =	miniRT.c utilsRT.c initMiniRT.c my_malloc.c closest_distance.c miniRT_utils.c\
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 		window_utils/utils.c \
 		param_object/geom_object.c param_object/option_object.c param_object/checker_range.c \
