@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:32 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 14:43:32 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:57:57 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 static void	get_object(char **mat, t_minirt *data, t_index *id, char **file)
 {
@@ -40,8 +40,7 @@ static void	get_param(char **file, t_minirt *data)
 	id.j = 0;
 	id.k = 0;
 	id.t = 0;
-	tmp = NULL;
-	while(file[id.i])
+	while (file[id.i])
 	{
 		tmp = ft_split(file[id.i], ' ');
 		if (tmp[0][0] == 'A')
@@ -50,9 +49,7 @@ static void	get_param(char **file, t_minirt *data)
 			get_camera(tmp, file, data);
 		else if (tmp[0][0] == 'L')
 			get_light(tmp, file, data);
-		else if (ft_strncmp(tmp[0], "sp", 3) == 0
-				|| ft_strncmp(tmp[0], "pl", 3) == 0
-					|| ft_strncmp(tmp[0], "cy", 3) == 0)
+		else if (control_object(tmp) == 0)
 			get_object(tmp, data, &id, file);
 		else if (ft_strncmp(tmp[0], "\n", 1) != 0)
 			(void)(printf("Error: invalid argument")
@@ -60,16 +57,13 @@ static void	get_param(char **file, t_minirt *data)
 		free_mat(tmp);
 		id.i++;
 	}
-	data->nbr_object = id.j + id.k + id.t;
-	data->nbr_plane = id.k;
-	data->nbr_sphere = id.j;
-	data->nbr_cylinder = id.t;
+	get_nbr_object(data, id.j, id.k, id.t);
 }
 
 static int	get_file(t_minirt *data, int len, char *arg)
 {
 	int		i;
-	int 	fd;
+	int		fd;
 	char	**file;
 
 	i = -1;
@@ -78,7 +72,7 @@ static int	get_file(t_minirt *data, int len, char *arg)
 	if (fd < 0)
 		return (printf("Error: corrupted file\n"), 1);
 	if (open(arg, __O_DIRECTORY) > 0)
-		return(printf("Error: %s is a directory\n", arg), 1);
+		return (printf("Error: %s is a directory\n", arg), 1);
 	while (++i < len)
 		file[i] = get_next_line(fd);
 	file[i] = NULL;
@@ -108,7 +102,7 @@ static int	check_filename(char *argv)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int			fd;
 	int			len;
@@ -127,7 +121,7 @@ int main(int argc, char **argv)
 		if (fd == 1)
 			return (1);
 		ray_trace(data, &win_data);
-		mlx_hook(win_data.win, 2, 1, &key_hook, &win_data);
+		mlx_hook(win_data.win, 2, 1, &key_hook, data);
 		mlx_hook(win_data.win, 17, 1L << 17, &press_x, &win_data);
 		mlx_loop(win_data.mlx);
 	}

@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:53:26 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 13:58:58 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:54:26 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	render_sphere(t_ray ray, t_sphere sphere,
 {
 	double			t;
 	t_coord			center_adjust;
-	t_double		id;	
+	t_double		id;
 
 	center_adjust = subtract(ray.origin, sphere.position);
 	id.a = dot(ray.direction, ray.direction);
@@ -29,8 +29,8 @@ void	render_sphere(t_ray ray, t_sphere sphere,
 		t = (-id.b - sqrt(id.disc)) / (2.0 * id.a);
 		if (t > 0 && t < *closest_dist() && t < *sphere_dist())
 		{
-			*sphere_dist() = t;
 			*closest_dist() = t;
+			*sphere_dist() = t;
 			put_pixel(win_data, pixel.x, pixel.y, sphere.color);
 		}
 	}

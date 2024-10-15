@@ -6,13 +6,13 @@
 #    By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 14:10:57 by mdella-r          #+#    #+#              #
-#    Updated: 2024/10/09 12:30:28 by mdella-r         ###   ########.fr        #
+#    Updated: 2024/10/15 14:57:24 by mdella-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	miniRT.c utilsRT.c initMiniRT.c my_malloc.c closest_distance.c miniRT_utils.c\
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
-		window_utils/utils.c \
+		window_utils/utils.c window_utils/hook.c \
 		param_object/geom_object.c param_object/option_object.c param_object/checker_range.c \
 		render/render.c  render/render_sphere.c render/render_cylinder.c render/render_plane.c render/render_light.c render/render_utils.c\
 		vector_operator/vector.c vector_operator/vector2.c 
@@ -37,7 +37,7 @@ $(MLX_DIR):
 
 $(NAME): $(OBJS)
 		@make -C $(LIBFT_DIR)
-		@$(COMPILE) $(OBJS) $(LIBFT) -lpthread -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm -o $(NAME)
+		@$(COMPILE) $(OBJS) $(LIBFT) -L$(MLX_DIR) -lmlx_Linux -I$(MLX_DIR) -lXext -lX11 -lm -o $(NAME)
 		@echo compiled $(NAME)
 
 %.o: %.c

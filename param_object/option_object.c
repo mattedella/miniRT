@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:31:55 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 14:54:06 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:45:17 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 void	get_ambient_light(char **mat, char **file, t_minirt *data)
 {
@@ -50,8 +50,11 @@ void	get_camera(char **mat, char **file, t_minirt *data)
 	data->camera->vector_norm.z = ft_atod(tmp[2]);
 	free_mat(tmp);
 	check_vector_range(data->camera->vector_norm, data->win_data, mat, file);
-	data->camera->fov = (ft_atoi(mat [3]) * 0.5 * PI) / 180;
+	data->camera->fov = ft_atod(mat[3]);
+	data->camera->fov = (ft_atod(mat[3]) * PI) / 180;
 	check_fov(data->camera->fov, data->win_data, mat, file);
+	if (data->camera->fov == PI)
+		data->camera->fov = (179 * PI) / 180;
 }
 
 void	get_light(char **mat, char **file, t_minirt *data)
@@ -76,5 +79,5 @@ void	get_light(char **mat, char **file, t_minirt *data)
 	data->light->color.y = ft_atoi(tmp[1]);
 	data->light->color.z = ft_atoi(tmp[2]);
 	free_mat(tmp);
-	check_color_range(data->light->color ,data->win_data, mat, file);
+	check_color_range(data->light->color, data->win_data, mat, file);
 }

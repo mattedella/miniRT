@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 15:04:48 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/09/25 11:34:37 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:39:19 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 void	render_light(t_ray ray, t_alight *alight, t_light *light)
 {

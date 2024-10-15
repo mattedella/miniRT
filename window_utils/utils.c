@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:03:27 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 15:01:08 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:49:54 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 int	quit(char id, t_wdata *data, char **mat, char **file)
 {
@@ -32,13 +32,5 @@ int	quit(char id, t_wdata *data, char **mat, char **file)
 int	press_x(t_wdata *data)
 {
 	quit(0, data, NULL, NULL);
-	return (0);
-}
-
-int	key_hook(int keycode, t_wdata *w_data, t_minirt *data)
-{
-	(void)data;
-	if (keycode == ESC_KEY)
-		quit(0, w_data, NULL, NULL);
 	return (0);
 }
