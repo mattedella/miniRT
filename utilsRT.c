@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:55:56 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 10:53:58 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:58:58 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 double	ft_atod(char *argv)
 {
@@ -39,7 +39,7 @@ double	ft_atod(char *argv)
 
 void	free_mat(char **mat)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (mat[i])
@@ -66,7 +66,7 @@ size_t	mat_get_len(char *argv)
 	}
 	free(tmp);
 	close(fd);
-	return(i);
+	return (i);
 }
 
 int	mat_len(char **mat)

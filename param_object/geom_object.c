@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:29:05 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 14:52:53 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:43:51 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ void	get_sphere(char **mat, char **file, t_minirt *data, int i)
 	data->sphere[i].flag = 1;
 }
 
+static void	get_plane_2(char **mat, char **file, t_minirt *data, int i)
+{
+	char	**tmp;
+
+	tmp = ft_split(mat[3], ',');
+	if (!tmp[0] || !tmp[1] || !tmp[2])
+		(void)(printf("Error color plane: insert more data")
+			+ quit(3, data->win_data, mat, file));
+	data->plane[i].color.x = ft_atod(tmp[0]);
+	data->plane[i].color.y = ft_atod(tmp[1]);
+	data->plane[i].color.z = ft_atod(tmp[2]);
+	free_mat(tmp);
+	check_color_range(data->plane[i].color, data->win_data, mat, file);
+	data->plane[i].flag = 1;
+}
+
 void	get_plane(char **mat, char **file, t_minirt *data, int i)
 {
 	char	**tmp;
@@ -58,16 +74,25 @@ void	get_plane(char **mat, char **file, t_minirt *data, int i)
 	data->plane[i].vector_norm.z = ft_atod(tmp[2]);
 	check_vector_range(data->plane[i].vector_norm, data->win_data, mat, file);
 	free_mat(tmp);
-	tmp = ft_split(mat[3], ',');
+	get_plane_2(mat, file, data, i);
+}
+
+static void	get_cylinder_2(char **mat, char **file, t_minirt *data, int i)
+{
+	char	**tmp;
+
+	data->cylinder[i].diameter = ft_atod(mat[3]);
+	data->cylinder[i].height = ft_atod(mat[4]);
+	tmp = ft_split(mat[5], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
-		(void)(printf("Error color plane: insert more data")
+		(void)(printf("Error color cylinder: insert more data")
 			+ quit(3, data->win_data, mat, file));
-	data->plane[i].color.x = ft_atod(tmp[0]);
-	data->plane[i].color.y = ft_atod(tmp[1]);
-	data->plane[i].color.z = ft_atod(tmp[2]);
+	data->cylinder[i].color.x = ft_atod(tmp[0]);
+	data->cylinder[i].color.y = ft_atod(tmp[1]);
+	data->cylinder[i].color.z = ft_atod(tmp[2]);
 	free_mat(tmp);
-	check_color_range(data->plane[i].color, data->win_data, mat, file);
-	data->plane[i].flag = 1;
+	check_color_range(data->cylinder[i].color, data->win_data, mat, file);
+	data->cylinder[i].flag = 1;
 }
 
 void	get_cylinder(char **mat, char **file, t_minirt *data, int i)
@@ -92,16 +117,5 @@ void	get_cylinder(char **mat, char **file, t_minirt *data, int i)
 	free_mat(tmp);
 	check_vector_range(data->cylinder[i].vector_norm,
 		data->win_data, mat, file);
-	data->cylinder[i].diameter = ft_atod(mat[3]);
-	data->cylinder[i].height = ft_atod(mat[4]);
-	tmp = ft_split(mat[5], ',');
-	if (!tmp[0] || !tmp[1] || !tmp[2])
-		(void)(printf("Error color cylinder: insert more data")
-			+ quit(3, data->win_data, mat, file));
-	data->cylinder[i].color.x = ft_atod(tmp[0]);
-	data->cylinder[i].color.y = ft_atod(tmp[1]);
-	data->cylinder[i].color.z = ft_atod(tmp[2]);
-	free_mat(tmp);
-	check_color_range(data->cylinder[i].color, data->win_data, mat, file);
-	data->cylinder[i].flag = 1;
+	get_cylinder_2(mat, file, data, i);
 }

@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 11:19:35 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 11:47:13 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:44:35 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 char	*ft_join(char *buff_stat, char *buff)
 {

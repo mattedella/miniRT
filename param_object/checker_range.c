@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:07:59 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/09 14:46:35 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:39:59 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	check_ratio_light(double light, t_wdata *data, char **mat, char **file)
 	return ;
 }
 
-void	check_fov(int fov, t_wdata *data, char **mat, char **file)
+void	check_fov(double fov, t_wdata *data, char **mat, char **file)
 {
-	if (fov < 0 || fov > 180)
+	if (fov < 0 || fov > PI)
 		(void)(printf("Error: fov out of range\n") + quit(9, data, mat, file));
 	return ;
 }

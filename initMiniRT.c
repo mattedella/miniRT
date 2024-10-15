@@ -6,11 +6,11 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:26:24 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/08 12:30:24 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:20:04 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"miniRT.h"
+#include "miniRT.h"
 
 void	init_sphere(t_minirt *data, int n_cmd)
 {
@@ -19,7 +19,9 @@ void	init_sphere(t_minirt *data, int n_cmd)
 	i = 0;
 	if (n_cmd > 0)
 		data->sphere = my_calloc(sizeof(t_sphere), n_cmd);
-	while (i < n_cmd && n_cmd != 0)
+	else
+		data->sphere = my_calloc(sizeof(t_sphere), 1);
+	while (i < n_cmd)
 	{
 		data->sphere[i].position.x = 0;
 		data->sphere[i].position.y = 0;
@@ -38,9 +40,11 @@ void	init_cylinder(t_minirt *data, int n_cmd)
 	int	i;
 
 	i = 0;
-	if (n_cmd > 0)	
-		data->cylinder = my_calloc(sizeof(t_cylinder),n_cmd);
-	while (i < n_cmd && n_cmd != 0)
+	if (n_cmd > 0)
+		data->cylinder = my_calloc(sizeof(t_cylinder), n_cmd);
+	else
+		data->cylinder = my_calloc(sizeof(t_cylinder), 1);
+	while (i < n_cmd)
 	{
 		data->cylinder[i].position.x = 0;
 		data->cylinder[i].position.y = 0;
@@ -49,7 +53,7 @@ void	init_cylinder(t_minirt *data, int n_cmd)
 		data->cylinder[i].height = 0;
 		data->cylinder[i].vector_norm.x = 0;
 		data->cylinder[i].vector_norm.y = 0;
-		data->cylinder[i].vector_norm.z = 0; 
+		data->cylinder[i].vector_norm.z = 0;
 		data->cylinder[i].color.x = 0;
 		data->cylinder[i].color.y = 0;
 		data->cylinder[i].color.z = 0;
@@ -65,14 +69,16 @@ void	init_plane(t_minirt *data, int n_cmd)
 	i = 0;
 	if (n_cmd > 0)
 		data->plane = my_calloc(sizeof(t_plane), n_cmd);
-	while (i < n_cmd && n_cmd != 0)
+	else
+		data->plane = my_calloc(sizeof(t_plane), 1);
+	while (i < n_cmd)
 	{
 		data->plane[i].position.x = 0;
 		data->plane[i].position.y = 0;
 		data->plane[i].position.z = 0;
 		data->plane[i].vector_norm.x = 0;
 		data->plane[i].vector_norm.y = 0;
-		data->plane[i].vector_norm.z = 0; 
+		data->plane[i].vector_norm.z = 0;
 		data->plane[i].color.x = 0;
 		data->plane[i].color.y = 0;
 		data->plane[i].color.z = 0;
