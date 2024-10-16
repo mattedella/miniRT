@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:47:27 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/11 11:45:23 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:47:31 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,13 @@ t_coord	norm(t_coord v)
 	if (length == 0)
 		return (v);
 	return (scale(v, 1 / length));
+}
+
+t_rgb multiply(t_rgb c1, t_rgb c2)
+{
+    return (t_rgb){
+        c1.x * c2.x,
+        c1.y * c2.y,
+        c1.z * c2.z
+    };
 }

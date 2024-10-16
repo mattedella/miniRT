@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/15 15:43:42 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:43:55 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,48 @@ static t_ray	get_ray(double x, double y, t_camera *camera)
 	return (ray);
 }
 
-void	render(t_minirt *data, t_wdata *win_data, t_coord pixel)
+static void reset_closest_dist(void)
 {
-	t_ray		ray;
-	int			i;
-
-	i = 0;
 	*sphere_dist() = DBL_MAX;
 	*cylinder_dist() = DBL_MAX;
 	*plane_dist() = DBL_MAX;
 	*closest_dist() = DBL_MAX;
-	while (i < data->nbr_object)
+}
+
+static void	init_rec(t_hit_record *rec)
+{
+	rec->color = (t_rgb){0, 0, 0};
+	rec->hit = 0;
+	rec->normal = (t_coord){0, 0, 0};
+	rec->object = NULL;
+	rec->object_type = 0;
+	rec->p = (t_coord){0, 0, 0};
+	rec->t = 0;
+}
+
+void	render(t_minirt *data, t_wdata *win_data, t_coord pixel)
+{
+	t_ray			ray;
+	t_index			id;
+	t_hit_record	rec;
+
+	(void)win_data;
+	init_rec(&rec);
+	id.i = -1;
+	id.t = 0;
+	reset_closest_dist();
+	while (++id.i < data->nbr_object)
 	{
 		ray = get_ray(pixel.x, pixel.y, data->camera);
-		if (i < data->nbr_plane && data->plane[i].flag != 0)
-			render_plane(ray, data->plane[i], win_data, pixel);
-		if (i < data->nbr_sphere && data->sphere[i].flag != 0)
-			render_sphere(ray, data->sphere[i], win_data, pixel);
-		if (i < data->nbr_cylinder && data->cylinder[i].flag != 0)
-			render_cylinder(ray, data->cylinder[i], win_data, pixel);
-		i++;
+		if (id.i < data->nbr_plane && data->plane[id.i].flag != 0)
+			render_plane(ray, data->plane[id.i], &rec);
+		if (id.i < data->nbr_sphere && data->sphere[id.i].flag != 0)
+			render_sphere(ray, data->sphere[id.i], &rec);
+		if (id.i < data->nbr_cylinder && data->cylinder[id.i].flag != 0)
+			render_cylinder(ray, data->cylinder[id.i], &rec);
 	}
+	if (rec.hit)
+		render_light(data, ray, &rec, pixel);
 }
 
 void	ray_trace(t_minirt *data, t_wdata *win_data)
