@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/15 15:41:51 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:32:25 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,13 @@
 #  define BUFFER_SIZE 2
 # endif
 
+# define SPHERE 1
+# define PLANE 2
+# define CYLINDER 3
 # define DBL_MAX 1.7976931348623157E+308
 # define PI 3.141593
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 1000
-# define W_KEY 119
-# define A_KEY 97
-# define S_KEY 115
-# define D_KEY 100
-# define L_KEY 108
-# define C_KEY 99
-# define P_KEY 112
-# define Y_KEY 121
-# define R_KEY 114
-# define O_KEY 111
-# define X_KEY 120
-# define Z_KEY 122
-# define PLUS_KEY 65451
-# define MINUS_KEY 65453
-# define UP_ARROW 65362
-# define LEFT_ARROW 65361
-# define RIGHT_ARROW 65363
-# define DOWN_ARROW 65364
 # define ESC_KEY 65307
 
 typedef struct s_index
@@ -141,6 +126,39 @@ typedef struct s_window_data
 	char		*addr;
 }				t_wdata;
 
+typedef struct s_cylinder_intersect
+{
+	t_coord	axis;
+	t_coord	oc;
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	double	sqrt_discriminant;
+	double	t1;
+	double	t2;
+	double	t_body;
+	t_coord	hit_point;
+	double	half_height;
+	double	t_cap;
+	t_coord	cap_normal;
+	double	cap_offset;
+	t_coord	cap_center;
+	double	denom;
+	t_coord	center_to_hit;
+	t_coord	radial_vector;
+}			t_cylinder_intersect;
+
+typedef struct s_hit_record {
+	t_coord		p;
+	t_coord		normal;
+	double		t;
+	t_rgb		color;
+	int			object_type;
+	void		*object;
+	int			hit;
+}				t_hit_record;
+
 typedef struct s_minirt
 {
 	t_alight	*alight;
@@ -215,12 +233,11 @@ void			init_data(t_minirt *data, t_wdata *win_data);
 void			render(t_minirt *data, t_wdata *win_data, t_coord pixel);
 void			ray_trace(t_minirt *data, t_wdata *win_data);
 void			render_plane(t_ray ray, t_plane plane,
-					t_wdata *win_data, t_coord pixel);
+					t_hit_record *rec);
 void			render_sphere(t_ray ray, t_sphere sphere,
-					t_wdata *win_data, t_coord pixel);
+					t_hit_record *rec);
 void			render_cylinder(t_ray ray, t_cylinder cylinder,
-					t_wdata *win_data, t_coord pixel);
-void			render_light(t_ray ray, t_alight *alight, t_light *light);
+					t_hit_record *rec);
 void			put_pixel(t_wdata *data, int x, int y, t_rgb color);
 
 // vector
@@ -232,5 +249,16 @@ t_coord			cross(t_coord v1, t_coord v2);
 t_coord			subtract(t_coord v1, t_coord v2);
 double			dot(t_coord v1, t_coord v2);
 double			length(t_coord v);
+t_rgb			multiply(t_rgb c1, t_rgb c2);
+
+// light
+void			render_light(t_minirt *data, t_ray ray,
+					t_hit_record *rec, t_coord pixel);
+t_rgb			calculate_ambient(t_alight *alight);
+t_rgb			calculate_diffuse(t_light *light, t_coord normal,
+					t_coord light_dir, t_rgb color);
+t_rgb			calculate_specular(t_light *light, t_coord view_dir,
+					t_coord reflect_dir, t_rgb color);
+t_coord			calculate_reflect_dir(t_coord normal, t_coord light_dir);
 
 #endif

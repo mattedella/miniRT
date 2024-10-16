@@ -6,13 +6,13 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 15:03:02 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/15 15:54:02 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:57:18 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	render_plane(t_ray ray, t_plane plane, t_wdata *win_data, t_coord pixel)
+void	render_plane(t_ray ray, t_plane plane, t_hit_record *rec)
 {
 	double	t;
 	double	numerator;
@@ -27,6 +27,13 @@ void	render_plane(t_ray ray, t_plane plane, t_wdata *win_data, t_coord pixel)
 	{
 		*closest_dist() = t;
 		*plane_dist() = t;
-		put_pixel(win_data, pixel.x, pixel.y, plane.color);
+		rec->t = t;
+		rec->p = add(ray.origin, scale(ray.direction, t));
+		rec->normal = plane.vector_norm;
+		if (dot(ray.direction, rec->normal) > 0)
+			rec->normal = scale(rec->normal, -1);
+		rec->color = plane.color;
+		rec->object = (void*)&plane;
+		rec->hit = 1;
 	}
 }
