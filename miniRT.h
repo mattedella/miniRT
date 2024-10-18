@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/16 13:32:25 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:14:45 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ typedef struct s_cylinder_intersect
 	t_coord	radial_vector;
 }			t_cylinder_intersect;
 
-typedef struct s_hit_record {
+typedef struct s_hit_record
+{
 	t_coord		p;
 	t_coord		normal;
 	double		t;
@@ -222,6 +223,7 @@ double			*closest_dist(void);
 double			*plane_dist(void);
 double			*sphere_dist(void);
 double			*cylinder_dist(void);
+void			set_dist(double t);
 
 // init data
 void			*my_calloc(size_t size, int n_cmd);
@@ -260,5 +262,41 @@ t_rgb			calculate_diffuse(t_light *light, t_coord normal,
 t_rgb			calculate_specular(t_light *light, t_coord view_dir,
 					t_coord reflect_dir, t_rgb color);
 t_coord			calculate_reflect_dir(t_coord normal, t_coord light_dir);
+
+//intersect
+int				intersect_plane(t_ray ray, t_plane plane,
+					t_hit_record *rec);
+int				intersect_sphere(t_ray ray, t_sphere sphere,
+					t_hit_record *rec);
+int				intersect_cylinder(t_ray ray, t_cylinder cylinder,
+					t_hit_record *rec);
+int				intersect_scene(t_minirt *data, t_ray ray, t_hit_record *rec);
+t_coord			calculate_body_normal(t_ray ray, t_cylinder cylinder,
+					t_coord axis, double t);
+double			intersect_cylinder_cap(t_ray ray, t_cylinder c,
+					t_coord axis, t_coord *cap_normal);
+t_hit_record	set_hit_record(t_ray ray, double t,
+					t_coord normal, t_rgb color);
+double			intersect_cylinder_cap(t_ray ray, t_cylinder cylinder,
+					t_coord axis, t_coord *cap_normal);
+double			intersect_cylinder_body(t_ray ray, t_cylinder cylinder,
+					t_coord axis, t_double *t);
+int				solve_quadratic(t_double *coeffs, t_double *t);
+t_double		calculate_cylinder_coefficients(t_ray ray, t_cylinder cylinder,
+					t_coord axis, t_coord oc);
+void			init_hit_record(t_hit_record *rec);
+void			get_cap_norm(int i, t_coord *cap_normal, t_coord axis);
+t_coord			get_cap_center(int i, t_cylinder cylinder, t_coord axis);
+t_coord			random_in_hemisphere(t_coord normal);
+t_coord			random_in_unit_disk(void);
+t_rgb			color_check( t_rgb color);
+t_hit_record	set_hit_record(t_ray ray, double t,
+					t_coord normal, t_rgb color);
+t_rgb			global_illumination(t_minirt *data, t_hit_record *rec,
+					int samples, int depth);
+t_coord			calculate_body_normal(t_ray ray, t_cylinder cylinder,
+					t_coord axis, double t);
+int				is_in_shadow(t_minirt *data, t_coord point, t_coord light_dir,
+					double light_distance);
 
 #endif

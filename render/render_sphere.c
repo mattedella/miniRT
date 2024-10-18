@@ -6,13 +6,13 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:53:26 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/16 11:33:06 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:55:28 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	render_sphere(t_ray ray, t_sphere sphere,t_hit_record *rec)
+void	render_sphere(t_ray ray, t_sphere sphere, t_hit_record *rec)
 {
 	double			t;
 	t_coord			center_adjust;
@@ -30,11 +30,11 @@ void	render_sphere(t_ray ray, t_sphere sphere,t_hit_record *rec)
 		{
 			*closest_dist() = t;
 			*sphere_dist() = t;
-				rec->t = t;
-				rec->p = add(ray.origin, scale(ray.direction, t));
-				rec->normal = norm(subtract(rec->p, sphere.position));
-				rec->color = sphere.color;
-				rec->hit = 1;
+			rec->t = t;
+			rec->p = add(ray.origin, scale(ray.direction, t));
+			rec->normal = norm(subtract(rec->p, sphere.position));
+			rec->color = sphere.color;
+			rec->hit = 1;
 		}
 	}
 }
