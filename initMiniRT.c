@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:26:24 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/15 12:20:04 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:13:16 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	init_cylinder(t_minirt *data, int n_cmd)
 
 	i = 0;
 	if (n_cmd > 0)
-		data->cylinder = my_calloc(sizeof(t_cylinder), n_cmd);
+		data->cylinder = my_calloc(sizeof(t_cylinder), n_cmd + 1);
 	else
 		data->cylinder = my_calloc(sizeof(t_cylinder), 1);
-	while (i < n_cmd)
+	while (i <= n_cmd)
 	{
 		data->cylinder[i].position.x = 0;
 		data->cylinder[i].position.y = 0;

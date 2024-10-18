@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:29:05 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/11 11:43:51 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:04:26 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,10 @@ void	get_cylinder(char **mat, char **file, t_minirt *data, int i)
 	data->cylinder[i].vector_norm.x = ft_atod(tmp[0]);
 	data->cylinder[i].vector_norm.y = ft_atod(tmp[1]);
 	data->cylinder[i].vector_norm.z = ft_atod(tmp[2]);
+	if (data->cylinder[i].vector_norm.x == 0
+		&& data->cylinder[i].vector_norm.y == 0
+		&& data->cylinder[i].vector_norm.z == -1)
+		data->cylinder[i].vector_norm.z = 1;
 	free_mat(tmp);
 	check_vector_range(data->cylinder[i].vector_norm,
 		data->win_data, mat, file);

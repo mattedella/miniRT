@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/16 13:43:55 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:59:09 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static t_ray	get_ray(double x, double y, t_camera *camera)
 	double	ratio;
 	double	cam_scale;
 	t_ray	ray;
-	t_coord	right;
-	t_coord	up;
 
 	ratio = (double)(WIN_WIDTH / WIN_HEIGHT);
 	cam_scale = tan(camera->fov / 2) / 2;
@@ -29,17 +27,11 @@ static t_ray	get_ray(double x, double y, t_camera *camera)
 		* ratio * cam_scale;
 	ray.direction.y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * cam_scale;
 	ray.direction.z = camera->vector_norm.z;
-	right = norm(cross((t_coord){0, 1, 0},
-				norm(camera->vector_norm)));
-	up = cross(norm(camera->vector_norm), right);
-	ray.direction = add(add(scale(right, ray.direction.x),
-				scale(up, ray.direction.y)),
-			scale(norm(camera->vector_norm), camera->vector_norm.z));
 	ray.direction = norm(ray.direction);
 	return (ray);
 }
 
-static void reset_closest_dist(void)
+static void	reset_closest_dist(void)
 {
 	*sphere_dist() = DBL_MAX;
 	*cylinder_dist() = DBL_MAX;
