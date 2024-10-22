@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:32 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/11 11:57:57 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:02:54 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ static int	get_file(t_minirt *data, int len, char *arg)
 		file[i] = get_next_line(fd);
 	file[i] = NULL;
 	close(fd);
+	if (check_file(file) == 1)
+		(void)(printf("Error: character incorrect\n")
+			+ quit(104, data->win_data, file, NULL));
 	check_object(data, file);
 	check_option(data, file);
 	get_param(file, data);

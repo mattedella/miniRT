@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:10:24 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/11 11:49:44 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:42:53 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	check_option(t_minirt *data, char **file)
 		id.i++;
 	}
 	if (id.j == 0 || id.k == 0 || id.t == 0)
-		(void)(printf("Error: missing obtion\n")
+		(void)(printf("Error: missing option\n")
 			+ quit(101, data->win_data, file, NULL));
 }

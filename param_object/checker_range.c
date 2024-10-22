@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:07:59 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/15 15:39:59 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:59:04 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,15 @@ void	check_fov(double fov, t_wdata *data, char **mat, char **file)
 	if (fov < 0 || fov > PI)
 		(void)(printf("Error: fov out of range\n") + quit(9, data, mat, file));
 	return ;
+}
+
+int	check_comma(char *file)
+{
+	int	i;
+
+	i = -1;
+	while (file[++i])
+		if (file[i] == ',')
+			return (1);
+	return (0);
 }

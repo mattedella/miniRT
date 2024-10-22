@@ -6,14 +6,14 @@
 #    By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 14:10:57 by mdella-r          #+#    #+#              #
-#    Updated: 2024/10/18 16:35:27 by mdella-r         ###   ########.fr        #
+#    Updated: 2024/10/22 11:02:08 by mdella-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	miniRT.c utilsRT.c initMiniRT.c my_malloc.c closest_distance.c miniRT_utils.c\
+SRCS =	checker.c miniRT.c utilsRT.c initMiniRT.c my_malloc.c closest_distance.c miniRT_utils.c\
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 		window_utils/utils.c window_utils/hook.c \
-		param_object/geom_object.c param_object/option_object.c param_object/checker_range.c \
+		param_object/geom_object_2.c param_object/geom_object.c param_object/option_object.c param_object/checker_range.c \
 		render/render_light_utils.c render/intersect_light_utils.c render/intersect_utils.c render/render.c  render/render_sphere.c render/render_cylinder.c render/intersect_light.c render/render_plane.c render/render_light.c render/render_utils.c render/calculate_light.c\
 		vector_operator/vector.c vector_operator/vector2.c 
 

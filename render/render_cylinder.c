@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:04:48 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/18 16:34:25 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:28:37 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,31 +88,31 @@ static t_hit_record	set_hit_records(t_ray ray, double t,
 	return (rec);
 }
 
-void	render_cylinder(t_ray ray, t_cylinder cylinder, t_hit_record *rec)
+void	render_cylinder(t_ray ray, t_cylinder cy, t_hit_record *rec)
 {
 	t_double	coef;
 	t_double	t;
 	t_coord		cap_normal;
 	t_coord		axis;
 
-	axis = norm(cylinder.vector_norm);
-	coef = calculate_cylinder_coefficient(ray, cylinder, axis);
+	axis = norm(cy.vector_norm);
+	coef = calculate_cylinder_coefficient(ray, cy, axis);
 	if (!solve_quadratics(coef, &t))
 		return ;
-	t.a = intersect_cylinder_bodys(ray, cylinder, axis, &t);
-	t.b = intersect_cylinder_cap(ray, cylinder, axis, &cap_normal);
+	t.a = intersect_cylinder_bodys(ray, cy, axis, &t);
+	t.b = intersect_cylinder_cap(ray, cy, axis, &cap_normal);
 	if (t.a < 0 && t.b < 0)
 		return ;
-	if ((t.a < t.b || t.b < 0) && t.a >= 0 && t.a < *cylinder_dist())
+	if ((t.a < t.b || t.b < 0) && t.a >= 0 && t.a < *cylinder_dist()
+		&& t.a < *closest_dist())
 	{
 		*rec = set_hit_records(ray, t.a,
-				calculate_body_normal(ray, cylinder, axis, t.a),
-				cylinder.color);
+				calculate_body_normal(ray, cy, axis, t.a), cy.color);
 		set_dist(t.a);
 	}
-	else if (t.b >= 0 && t.b < *cylinder_dist())
+	else if (t.b >= 0 && t.b < *cylinder_dist() && t.b < *closest_dist())
 	{
-		*rec = set_hit_records(ray, t.b, cap_normal, cylinder.color);
+		*rec = set_hit_records(ray, t.b, cap_normal, cy.color);
 		set_dist(t.b);
 	}
 }

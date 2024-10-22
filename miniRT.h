@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:07:54 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/18 17:14:45 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:09:06 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define CYLINDER 3
 # define DBL_MAX 1.7976931348623157E+308
 # define PI 3.141593
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 1000
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define ESC_KEY 65307
 
 typedef struct s_index
@@ -175,6 +175,21 @@ typedef struct s_minirt
 	int			nbr_cylinder;
 }				t_minirt;
 
+typedef struct s_rayutils
+{
+	double		cam_scale;
+	double		ratio;
+	double		width;
+	t_coord		w;
+	t_coord		u;
+	t_coord		v;
+	t_coord		hor;
+	t_coord		ver;
+	t_coord		low_cor;
+	double		s;
+	double		t;
+}				t_rayutils;
+
 //get_next_line
 size_t			f_strlen(char *str);
 char			*get_next_line(int fd);
@@ -203,6 +218,10 @@ void			init_cylinder(t_minirt *data, int n_cmd);
 void			check_object(t_minirt *data, char **file);
 
 // check_param
+int				check_comma(char *file);
+int				check_arg(char **file, char c);
+int				check_file(char **file);
+int				check_num(char **file);
 void			check_fov(double fov, t_wdata *data, char **mat, char **file);
 void			check_color_range(t_rgb color, t_wdata *data,
 					char **mat, char **file);
@@ -298,5 +317,6 @@ t_coord			calculate_body_normal(t_ray ray, t_cylinder cylinder,
 					t_coord axis, double t);
 int				is_in_shadow(t_minirt *data, t_coord point, t_coord light_dir,
 					double light_distance);
+void			init_rec(t_hit_record *rec);
 
 #endif

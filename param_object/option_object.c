@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 11:31:55 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/18 15:33:22 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:41:11 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	get_ambient_light(char **mat, char **file, t_minirt *data)
 {
 	char	**tmp;
 
+	if (check_num(mat) == 1 || check_arg(mat, 'A') == 1)
+		(void)(printf("Error: ambient light data not valid\n")
+			+ quit(3, data->win_data, mat, file));
 	tmp = ft_split(mat[2], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		(void)(printf("Error color ambient light: insert more data")
@@ -29,10 +32,22 @@ void	get_ambient_light(char **mat, char **file, t_minirt *data)
 	check_color_range(data->alight->color, data->win_data, mat, file);
 }
 
+static void	get_camera_2(char **mat, char **file, t_minirt *data)
+{
+	data->camera->fov = ft_atod(mat[3]);
+	data->camera->fov = (ft_atod(mat[3]) * PI) / 180;
+	check_fov(data->camera->fov, data->win_data, mat, file);
+	if (data->camera->fov == PI)
+		data->camera->fov = (179 * PI) / 180;
+}
+
 void	get_camera(char **mat, char **file, t_minirt *data)
 {
 	char	**tmp;
 
+	if (check_num(mat) == 1 || check_arg(mat, 'C') == 1)
+		(void)(printf("Error: camera data not valid\n")
+			+ quit(3, data->win_data, mat, file));
 	tmp = ft_split(mat[1], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		(void)(printf("Error position camera: insert more data")
@@ -50,17 +65,16 @@ void	get_camera(char **mat, char **file, t_minirt *data)
 	data->camera->vector_norm.z = ft_atod(tmp[2]);
 	free_mat(tmp);
 	check_vector_range(data->camera->vector_norm, data->win_data, mat, file);
-	data->camera->fov = ft_atod(mat[3]);
-	data->camera->fov = (ft_atod(mat[3]) * PI) / 180;
-	check_fov(data->camera->fov, data->win_data, mat, file);
-	if (data->camera->fov == PI)
-		data->camera->fov = (179 * PI) / 180;
+	get_camera_2(mat, file, data);
 }
 
 void	get_light(char **mat, char **file, t_minirt *data)
 {
 	char	**tmp;
 
+	if (check_num(mat) == 1 || check_arg(mat, 'L'))
+		(void)(printf("Error: light data not valid\n")
+			+ quit(3, data->win_data, mat, file));
 	tmp = ft_split(mat[1], ',');
 	if (!tmp[0] || !tmp[1] || !tmp[2])
 		(void)(printf("Error position light: insert more data")

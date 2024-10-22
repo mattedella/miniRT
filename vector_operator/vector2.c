@@ -6,7 +6,7 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:47:27 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/18 17:12:55 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:16:26 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,15 @@ t_rgb	multiply(t_rgb c1, t_rgb c2)
 	ret.y = c1.y * c2.y;
 	ret.z = c1.z * c2.z;
 	return (ret);
+}
+
+void	init_rec(t_hit_record *rec)
+{
+	rec->color = (t_rgb){0, 0, 0};
+	rec->hit = 0;
+	rec->normal = (t_coord){0, 0, 0};
+	rec->object = NULL;
+	rec->object_type = 0;
+	rec->p = (t_coord){0, 0, 0};
+	rec->t = 0;
 }

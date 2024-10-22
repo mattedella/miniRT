@@ -6,27 +6,46 @@
 /*   By: mdella-r <mdella-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:55:45 by mdella-r          #+#    #+#             */
-/*   Updated: 2024/10/18 15:59:09 by mdella-r         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:26:51 by mdella-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+static t_coord	get_camera_right(t_coord cam_dir)
+{
+	t_coord	up;
+	t_coord	right;
+
+	up = (t_coord){0, 1, 0};
+	if (fabs(cam_dir.y) > 0.9999)
+		right = (t_coord){1, 0, 0};
+	else
+		right = norm(cross(up, cam_dir));
+	return (right);
+}
+
 static t_ray	get_ray(double x, double y, t_camera *camera)
 {
-	double	ratio;
-	double	cam_scale;
-	t_ray	ray;
+	t_ray		ray;
+	t_rayutils	utils;
 
-	ratio = (double)(WIN_WIDTH / WIN_HEIGHT);
-	cam_scale = tan(camera->fov / 2) / 2;
-	ray.origin.x = camera->position.x;
-	ray.origin.y = camera->position.y;
-	ray.origin.z = camera->position.z;
-	ray.direction.x = (2 * ((x + 0.5) / (double)WIN_WIDTH) - 1)
-		* ratio * cam_scale;
-	ray.direction.y = (1 - 2 * (y + 0.5) / (double)WIN_HEIGHT) * cam_scale;
-	ray.direction.z = camera->vector_norm.z;
+	utils.ratio = (double)WIN_WIDTH / WIN_HEIGHT;
+	utils.cam_scale = 2.0 * tan(camera->fov / 2);
+	utils.width = utils.ratio * utils.cam_scale;
+	ray.origin = camera->position;
+	utils.w = norm(scale(camera->vector_norm, -1));
+	utils.u = get_camera_right(utils.w);
+	utils.v = cross(utils.w, utils.u);
+	utils.v = scale(utils.v, -1);
+	utils.hor = scale(utils.u, utils.width);
+	utils.ver = scale(utils.v, utils.cam_scale);
+	utils.low_cor = subtract(ray.origin,
+			add(scale(utils.hor, 0.5), add(scale(utils.ver, 0.5), utils.w)));
+	utils.s = x / (WIN_WIDTH - 1);
+	utils.t = y / (WIN_HEIGHT - 1);
+	ray.direction = subtract(add(utils.low_cor, add(scale(utils.hor, utils.s),
+					scale(utils.ver, utils.t))), ray.origin);
 	ray.direction = norm(ray.direction);
 	return (ray);
 }
@@ -37,17 +56,6 @@ static void	reset_closest_dist(void)
 	*cylinder_dist() = DBL_MAX;
 	*plane_dist() = DBL_MAX;
 	*closest_dist() = DBL_MAX;
-}
-
-static void	init_rec(t_hit_record *rec)
-{
-	rec->color = (t_rgb){0, 0, 0};
-	rec->hit = 0;
-	rec->normal = (t_coord){0, 0, 0};
-	rec->object = NULL;
-	rec->object_type = 0;
-	rec->p = (t_coord){0, 0, 0};
-	rec->t = 0;
 }
 
 void	render(t_minirt *data, t_wdata *win_data, t_coord pixel)
